@@ -131,8 +131,8 @@ const useProductStore = create((set, get) => ({
     },
   ],
   addNewProduct: (newProductName, productPrice, productCategory) => {
-    const oldState = get();
-    const newProductId = oldState.products.length + 1;
+    const { products } = get();
+    const newProductId = products.length + 1;
     const newProduct = {
       id: newProductId,
       category: productCategory,
@@ -143,6 +143,21 @@ const useProductStore = create((set, get) => ({
 
     set((state) => ({
       products: [...state.products, newProduct],
+    }));
+  },
+  filteredProducts: (selectedCategory) => {
+    const { products, q } = get();
+    return products
+      .filter(
+        (el) => selectedCategory === "All" || el.category === selectedCategory
+      )
+      .filter((el) => el.title.toLowerCase().search(q.toLowerCase()) != -1);
+  },
+
+  q: "",
+  setQ: (keyword) => {
+    set(() => ({
+      q: keyword,
     }));
   },
 

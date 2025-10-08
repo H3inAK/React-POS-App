@@ -8,7 +8,6 @@ import useThemeStore, { ThemeMode } from "./stores/useThemeStore";
 const App = () => {
   const { themeMode } = useThemeStore();
   const isDarkMode = themeMode == ThemeMode.DARK;
-  console.log(isDarkMode);
 
   return (
     <main className="h-screen flex flex-col bg-gray-50 dark:bg-zinc-800">

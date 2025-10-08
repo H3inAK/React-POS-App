@@ -1,12 +1,17 @@
 import React from "react";
 import { Minus, Plus } from "lucide-react";
 
-const VoucherItem = ({ item }) => {
-  const { title, quantity, price } = item;
+const VoucherItem = ({
+  item: {
+    id,
+    product: { title, price },
+    quantity,
+  },
+}) => {
   const cost = quantity * price;
 
   return (
-    <div className="border-b border-gray-300 dark:border-zinc-700 py-3">
+    <div id={id} className="border-b border-gray-300 dark:border-zinc-700 py-3">
       <div className="flex justify-between items-start text-sm mb-2.5">
         <h3 className="text-gray-800 dark:text-zinc-200">{title}</h3>
         <div className="flex gap-1 items-center">

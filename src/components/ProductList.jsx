@@ -1,12 +1,30 @@
 import ProductCard from "./ProductCard";
 import useProductStore from "../stores/useProductStore";
+import useCategoryStore from "../stores/useCategoryStore";
 
 const ProductList = () => {
-  const {products} = useProductStore();
+  const { products, filteredProducts } = useProductStore();
+  const { selectedCategory } = useCategoryStore();
 
-  return (
+  return products.length == 0 ? (
+    <div className="h-full flex flex-col items-center justify-center">
+      <img
+        src="empty.svg"
+        className="h-[160px] object-cover mb-3 -translate-x-1"
+      />
+      <p className="text-md text-zinc-200 dark:text-gray-300 mb-2">
+        There is no product yet!
+      </p>
+      <p className="text-sm text-zinc-300 dark:text-gray-400">
+        Tap(+) to add new product
+      </p>
+      <p className="mt-4"></p>
+    </div>
+  ) : (
     <div className="grid grid-cols-3 pr-0.5 gap-5 pb-5 lg:grid-cols-4 lg:gap-3 lg:pb-3">
-      {products.map(el => <ProductCard data={el} key={el.id}/>)}
+      {filteredProducts(selectedCategory).map((el) => (
+        <ProductCard data={el} key={el.id} />
+      ))}
     </div>
   );
 };

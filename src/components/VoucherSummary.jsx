@@ -1,7 +1,12 @@
 import React from "react";
+import useVoucherStore from "../stores/useVoucherStore";
 
 const VoucherSummary = () => {
-  const total = 37300;
+  const { items } = useVoucherStore();
+  const total = items.reduce(
+    (pv, cv) => pv + cv.product.price * cv.quantity,
+    0
+  );
   const tax = total * 0.05;
   const netTotal = total + tax;
 

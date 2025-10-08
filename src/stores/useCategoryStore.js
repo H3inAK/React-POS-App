@@ -10,9 +10,9 @@ const useCategoryStore = create((set, get) => ({
   ],
 
   addNewCategory: (newCategoryName) => {
-    const oldState = get();
+    const { categories } = get();
     const newCategory = {
-      id: oldState.categories.length + 1,
+      id: categories.length + 1,
       title: newCategoryName,
     };
     set((state) => ({

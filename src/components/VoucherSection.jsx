@@ -1,47 +1,9 @@
-import React from "react";
-
+import useVoucherStore from "../stores/useVoucherStore";
 import VoucherItem from "./VoucherItem";
 import VoucherSummary from "./VoucherSummary";
 
 const VoucherSection = () => {
-  const orderItems = [
-    {
-      id: 1,
-      title: "Berry Layered Mousse Cake",
-      quantity: 1,
-      price: 10500,
-    },
-    {
-      id: 2,
-      title: "Red velvet double cheese cake",
-      quantity: 2,
-      price: 10500,
-    },
-    {
-      id: 3,
-      title: "Buttery French Morning Croissant",
-      quantity: 1,
-      price: 5800,
-    },
-    {
-      id: 4,
-      title: "Berry Layered Mousse Cake",
-      quantity: 1,
-      price: 10500,
-    },
-    {
-      id: 5,
-      title: "Red velvet double cheese cake",
-      quantity: 2,
-      price: 10500,
-    },
-    {
-      id: 6,
-      title: "Buttery French Morning Croissant",
-      quantity: 1,
-      price: 5800,
-    },
-  ];
+  const { items } = useVoucherStore();
 
   return (
     <section className="col-span-2 flex flex-col min-h-0 bg-white dark:bg-zinc-800">
@@ -50,7 +12,7 @@ const VoucherSection = () => {
       </h3>
 
       <div className="px-5 flex-1 flex flex-col space-y-1.5 overflow-y-auto">
-        {orderItems.map((item) => (
+        {items.map((item) => (
           <VoucherItem key={item.id} item={item} />
         ))}
       </div>
