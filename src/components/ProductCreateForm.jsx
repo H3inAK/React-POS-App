@@ -16,10 +16,12 @@ const ProductCreateForm = () => {
   const { setOpenDrawerStatus, addNewProduct } = useProductStore();
   const { categories } = useCategoryStore();
 
-  const onSubmit = ({new_product_name, product_price, product_category}) => {
+  const onSubmit = ({ new_product_name, product_price, product_category }) => {
     addNewProduct(new_product_name, product_price, product_category);
     reset();
-    toast.success(`${new_product_name} has been created`);
+    toast.success(`${new_product_name} has been created`, {
+      position: "top-center",
+    });
   };
 
   const onCancel = () => {
@@ -110,11 +112,13 @@ const ProductCreateForm = () => {
               }`}
             >
               <option value="">-- Select Category --</option>
-              {categories.filter((cat) => cat.title !== 'All').map((cat) => (
-                <option key={cat.id} value={cat.title}>
-                  {cat.title}
-                </option>
-              ))}
+              {categories
+                .filter((cat) => cat.title !== "All")
+                .map((cat) => (
+                  <option key={cat.id} value={cat.title}>
+                    {cat.title}
+                  </option>
+                ))}
             </select>
 
             {/* Custom chevron */}

@@ -15,7 +15,9 @@ const CategoryCreateForm = ({ setIsOpenDrawer }) => {
   const onSubmit = ({ new_category_name }) => {
     addNewCategory(new_category_name);
     reset();
-    toast.success(`${new_category_name} is created`);
+    toast.success(`${new_category_name} is created`, {
+      position: "top-center",
+    });
   };
 
   const onCancel = () => {

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import { motion, AnimatePresence } from "framer-motion";
 import useVoucherStore from "../stores/useVoucherStore";
 import VoucherItem from "./VoucherItem";
 import VoucherSummary from "./VoucherSummary";
@@ -8,13 +10,32 @@ const VoucherSection = () => {
   return (
     <section className="col-span-2 flex flex-col min-h-0 bg-white dark:bg-zinc-800">
       <h3 className="p-5 text-2xl text-end text-zinc-900 dark:text-zinc-200">
-        Order Items#3423
+        Order Items
       </h3>
 
       <div className="px-5 flex-1 flex flex-col space-y-1.5 overflow-y-auto">
-        {items.map((item) => (
-          <VoucherItem key={item.id} item={item} />
-        ))}
+        <div className="last:flex hidden h-full w-full flex-col items-center justify-center gap-1.5">
+          <p className="text-sm text-gray-700 dark:text-gray-200">
+            No items in cart
+          </p>
+          <p className="text-xs text-gray-600 dark:text-gray-300">
+            Tap any product to add here
+          </p>
+        </div>
+        <AnimatePresence>
+          {items.map((item) => (
+            <motion.div
+              key={item.id}
+              layout
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <VoucherItem item={item} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       <div className="p-5 mt-auto border-t border-gray-300 dark:border-zinc-700">

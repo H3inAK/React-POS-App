@@ -72,13 +72,13 @@ const useProductStore = create((set, get) => ({
       price: 8000,
       image: "/images/9.png",
     },
-    {
-      id: 10,
-      category: "Coffee",
-      title: "Iced Caramel Latte Bliss",
-      price: 9500,
-      image: "/images/10.png",
-    },
+    // {
+    //   id: 10,
+    //   category: "Coffee",
+    //   title: "Iced Caramel Latte Bliss",
+    //   price: 9500,
+    //   image: "/images/10.png",
+    // },
     {
       id: 11,
       category: "Coffee",

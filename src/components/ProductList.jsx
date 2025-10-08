@@ -1,6 +1,8 @@
 import ProductCard from "./ProductCard";
 import useProductStore from "../stores/useProductStore";
 import useCategoryStore from "../stores/useCategoryStore";
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion } from "framer-motion";
 
 const ProductList = () => {
   const { products, filteredProducts } = useProductStore();
@@ -22,9 +24,20 @@ const ProductList = () => {
     </div>
   ) : (
     <div className="grid grid-cols-3 pr-0.5 gap-5 pb-5 lg:grid-cols-4 lg:gap-3 lg:pb-3">
-      {filteredProducts(selectedCategory).map((el) => (
-        <ProductCard data={el} key={el.id} />
-      ))}
+      <AnimatePresence>
+        {filteredProducts(selectedCategory).map((el) => (
+          <motion.div
+            key={el.id}
+            layout
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ProductCard data={el} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 };
