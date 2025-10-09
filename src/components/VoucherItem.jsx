@@ -25,7 +25,7 @@ const VoucherItem = ({
   };
 
   return (
-    <div className="border-b border-gray-300 dark:border-zinc-700 py-3">
+    <div className="border-b print:border-b-0 border-gray-300 dark:border-zinc-700 py-3">
       <div className="flex justify-between items-start text-sm mb-2.5">
         <h3 className="text-gray-800 dark:text-zinc-200">{title}</h3>
         <div className="flex gap-1 items-center">

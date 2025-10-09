@@ -12,7 +12,7 @@ const ProductList = () => {
     <div className="h-full flex flex-col items-center justify-center">
       <img
         src="empty.svg"
-        className="h-[160px] object-cover mb-3 -translate-x-1"
+        className="h-[120px] object-cover mb-3 -translate-x-1"
       />
       <p className="text-md text-zinc-200 dark:text-gray-300 mb-2">
         There is no product yet!
@@ -23,7 +23,7 @@ const ProductList = () => {
       <p className="mt-4"></p>
     </div>
   ) : (
-    <div className="grid grid-cols-3 pr-0.5 gap-5 pb-5 lg:grid-cols-4 lg:gap-3 lg:pb-3">
+    <div className="grid grid-cols-3 pr-0.5 gap-3 pb-5 xl:grid-cols-4 xl:gap-3 xl:pb-3">
       <AnimatePresence>
         {filteredProducts(selectedCategory).map((el) => (
           <motion.div

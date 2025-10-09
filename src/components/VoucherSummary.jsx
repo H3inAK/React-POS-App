@@ -1,14 +1,8 @@
-import React from "react";
 import useVoucherStore from "../stores/useVoucherStore";
 
 const VoucherSummary = () => {
-  const { items } = useVoucherStore();
-  const total = items.reduce(
-    (pv, cv) => pv + cv.product.price * cv.quantity,
-    0
-  );
-  const tax = total * 0.05;
-  const netTotal = total + tax;
+  const { summary } = useVoucherStore();
+  const { total, tax, netTotal } = summary();
 
   return (
     <table className="w-full text-end text-sm text-gray-900 dark:text-zinc-200 font-mono">
