@@ -1,0 +1,48 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "year": 2010
+    },
+    {
+      "id": "2",
+      "title": "The Godfather",
+      "genre": "Crime",
+      "year": 1972
+    },
+    {
+      "id": "3",
+      "title": "Toy Story",
+      "genre": "Animation",
+      "year": 1995
+    },
+    {
+      "title": "The lawyer",
+      "genre": "Action",
+      "year": 2009,
+      "id": "e592"
+    }
+  ],
+  "foods": [
+    {
+      "id": "1",
+      "name": "Pizza",
+      "type": "Fast Food",
+      "price": 8.99
+    },
+    {
+      "id": "2",
+      "name": "Sushi",
+      "type": "Japanese",
+      "price": 12.5
+    },
+    {
+      "id": "3",
+      "name": "Burger",
+      "type": "Fast Food",
+      "price": 6.75
+    }
+  ]
+}

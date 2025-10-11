@@ -1,3 +1,4 @@
+import { mutate } from "swr";
 import { create } from "zustand";
 
 export const ProductCreateDrawerStatus = Object.freeze({
@@ -6,145 +7,36 @@ export const ProductCreateDrawerStatus = Object.freeze({
 });
 
 const useProductStore = create((set, get) => ({
-  products: [
-    {
-      id: 1,
-      category: "Bread",
-      title: "Buttery French Morning Croissant",
-      price: 5800,
-      image: "/images/1.png",
-    },
-    {
-      id: 2,
-      category: "Bread",
-      title: "Artisan Crusty Rye Loaf",
-      price: 6300,
-      image: "/images/2.png",
-    },
-    {
-      id: 3,
-      category: "Bread",
-      title: "Healthy Sesame Multigrain Loaf",
-      price: 5800,
-      image: "/images/3.png",
-    },
-    {
-      id: 4,
-      category: "Bread",
-      title: "Golden Classic Sliced Bread",
-      price: 6400,
-      image: "/images/4.png",
-    },
+  products: [],
+  setProducts: (products) => set({ products: products }),
 
-    {
-      id: 5,
-      category: "Cake",
-      title: "Berry Layered Mousse Cake",
-      price: 16000,
-      image: "/images/5.png",
-    },
-    {
-      id: 6,
-      category: "Cake",
-      title: "Red velvet double cheese cake",
-      price: 10500,
-      image: "/images/6.png",
-    },
-    {
-      id: 7,
-      category: "Cake",
-      title: "Dark Chocolate Fudge Cake",
-      price: 10500,
-      image: "/images/7.png",
-    },
-    {
-      id: 8,
-      category: "Cake",
-      title: "Strawberry Glaze Cheesecake",
-      price: 12500,
-      image: "/images/8.png",
-    },
-
-    {
-      id: 9,
-      category: "Coffee",
-      title: "Creamy Classic Hot Cappuccino",
-      price: 8000,
-      image: "/images/9.png",
-    },
-    // {
-    //   id: 10,
-    //   category: "Coffee",
-    //   title: "Iced Caramel Latte Bliss",
-    //   price: 9500,
-    //   image: "/images/10.png",
-    // },
-    {
-      id: 11,
-      category: "Coffee",
-      title: "Bold Roast Hot Black Coffee",
-      price: 8000,
-      image: "/images/11.png",
-    },
-    {
-      id: 12,
-      category: "Coffee",
-      title: "Whipped Ice Mocha Craze",
-      price: 8500,
-      image: "/images/12.png",
-    },
-
-    {
-      id: 13,
-      category: "Smoothie",
-      title: "Frosted Berry Smoothie Burst",
-      price: 7800,
-      image: "/images/13.png",
-    },
-    {
-      id: 14,
-      category: "Smoothie",
-      title: "Frosted Strawberry Smoothie Burst",
-      price: 7800,
-      image: "/images/14.png",
-    },
-    {
-      id: 15,
-      category: "Smoothie",
-      title: "Frosted Lychee Smoothie Burst",
-      price: 9500,
-      image: "/images/15.png",
-    },
-    {
-      id: 16,
-      category: "Smoothie",
-      title: "Frosted Sunkist Smoothie Burst",
-      price: 9200,
-      image: "/images/16.png",
-    },
-    {
-      id: 17,
-      category: "Smoothie",
-      title: "Tropical Layered Fruit Smoothie",
-      price: 8500,
-      image: "/images/17.png",
-    },
-  ],
-  addNewProduct: (newProductName, productPrice, productCategory) => {
+  addNewProduct: async (title, price, category) => {
     const { products } = get();
-    const newProductId = products.length + 1;
+    const imageId = products.length + 1;
     const newProduct = {
-      id: newProductId,
-      category: productCategory,
-      title: newProductName,
-      price: productPrice,
-      image: `/images/${newProductId - 7}.png`,
+      category,
+      title,
+      price,
+      image: `/images/${imageId - 7}.png`,
     };
 
-    set((state) => ({
-      products: [...state.products, newProduct],
-    }));
+    try {
+      const res = await fetch("http://localhost:8000/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      });
+      const savedProduct = await res.json();
+
+      set((state) => ({
+        products: [...state.products, savedProduct],
+      }));
+      mutate("http://localhost:8000/products");
+    } catch (error) {
+      console.error(error);
+    }
   },
+
   filteredProducts: (selectedCategory) => {
     const { products, q } = get();
     return products

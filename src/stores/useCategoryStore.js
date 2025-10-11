@@ -1,23 +1,40 @@
+import { mutate } from "swr";
 import { create } from "zustand";
 
-const useCategoryStore = create((set, get) => ({
-  categories: [
-    { id: 0, title: "All" },
-    { id: 1, title: "Bread" },
-    { id: 2, title: "Cake" },
-    { id: 3, title: "Coffee" },
-    { id: 4, title: "Smoothie" },
-  ],
+const useCategoryStore = create((set) => ({
+  categories: [],
+  setCategories: (categories) => set({ categories: categories }),
 
-  addNewCategory: (newCategoryName) => {
-    const { categories } = get();
+  addNewCategory: async (newCategoryName) => {
     const newCategory = {
-      id: categories.length + 1,
+      id: Date.now(),
       title: newCategoryName,
     };
     set((state) => ({
       categories: [...state.categories, newCategory],
     }));
+
+    try {
+      const { id, ...payload } = newCategory;
+      const res = await fetch("http://localhost:8000/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const savedCategory = await res.json();
+      set((state) => ({
+        categories: state.categories.map((cat) =>
+          cat.id === id ? savedCategory : cat
+        ),
+      }));
+
+      mutate("http://localhost:8000/categories");
+    } catch (error) {
+      console.error(error);
+      set((state) => ({
+        categories: state.categories.filter((cat) => cat.id !== newCategory.id),
+      }));
+    }
   },
 
   selectedCategory: "All",

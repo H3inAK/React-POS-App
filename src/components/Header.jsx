@@ -28,7 +28,7 @@ const Header = () => {
     setIsRotating(true);
     removeAllItems();
 
-    setInterval(() => setIsRotating(false), 600);
+    setTimeout(() => setIsRotating(false), 600);
   };
 
   return (
@@ -50,7 +50,7 @@ const Header = () => {
           className="text-zinc-500 shadow-xs dark:shadow-sm bg-gray-100 dark:bg-zinc-700 p-2.5 rounded-full duration-300 hover:bg-zinc-300 dark:hover:bg-zinc-600 dark:hover:text-zinc-300 hover:text-zinc-600 hover:cursor-pointer dark:text-zinc-400"
         >
           <motion.div
-            animate={isRotating ? { rotate: 360 } : { rotate: 0 }}
+            animate={isRotating ? { rotate: [0, 360, 0] } : { rotate: 0 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <RefreshCcw size={20} />

@@ -1,12 +1,40 @@
+import { useEffect } from "react";
+import useSWR from "swr";
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion } from "framer-motion";
 import ProductCard from "./ProductCard";
 import useProductStore from "../stores/useProductStore";
 import useCategoryStore from "../stores/useCategoryStore";
-// eslint-disable-next-line no-unused-vars
-import { AnimatePresence, motion } from "framer-motion";
+import fetcher from "../utilities/fetcher";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 const ProductList = () => {
-  const { products, filteredProducts } = useProductStore();
+  const { products, setProducts, filteredProducts } = useProductStore();
   const { selectedCategory } = useCategoryStore();
+
+  const { data, isLoading, error } = useSWR(
+    "http://localhost:8000/products",
+    fetcher
+  );
+
+  useEffect(() => {
+    if (data) {
+      setProducts(data);
+    }
+  }, [data, setProducts]);
+
+  if (error)
+    return (
+      <div className="w-full h-full flex justify-center text-center">
+        <h3 className="text-sm text-zinc-700 dark:text-gray-300">
+          Failed to load ❌
+        </h3>
+      </div>
+    );
+
+  if (isLoading) {
+    return <ProductCardSkeleton count={8} />;
+  }
 
   return products.length == 0 ? (
     <div className="h-full flex flex-col items-center justify-center">

@@ -43,7 +43,7 @@ const ProductCard = ({ data: { id, category, title, price, image } }) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2 }}
           className="absolute top-2 right-2 bg-blue-500 text-white text-[10px] md:text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
-        >
+    >
           <CheckCircle2 size={12} />
           In Cart
         </motion.div>
